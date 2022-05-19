@@ -54,6 +54,6 @@ fn main() {
         .write_to_file(out_file_name.clone())
         .expect("Couldn't write bindings!");
 
-    Command::new("rustup").args(&["run", "nightly", "rustfmt", out_file_name.to_str().unwrap()]).status(); // .unwrap();
+    Command::new("rustup").args(&["run", "nightly", "rustfmt", out_file_name.to_str().unwrap()]).status().unwrap();
 }
 

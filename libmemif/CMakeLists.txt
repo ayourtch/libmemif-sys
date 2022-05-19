@@ -63,7 +63,7 @@ execute_process(
   OUTPUT_VARIABLE VER
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-string(REGEX REPLACE "v(.*)-([0-9]+)-(g[0-9a-f]+)" "\\1;\\2;\\3" VER ${VER})
+string(REGEX REPLACE "v(.*)-([0-9]+)-(g[0-9a-f]+)" "\\1;\\2;\\3" VER "${VER}")
 list(GET VER 0 tag)
 list(GET VER 1 commit_num)
 list(GET VER 2 commit_name)

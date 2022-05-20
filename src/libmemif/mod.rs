@@ -1,4 +1,3 @@
-
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -6,7 +5,7 @@
 #![allow(unused)]
 
 // use std;
-use std::fmt::{Debug, Formatter, Error};
+use std::fmt::{Debug, Error, Formatter};
 
 /*
  * #[repr(C)]
@@ -16,4 +15,3 @@ pub struct vnet_sw_interface_t {
 */
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-

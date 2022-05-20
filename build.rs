@@ -1,4 +1,3 @@
-
 extern crate bindgen;
 
 use std::env;
@@ -15,8 +14,6 @@ fn find_vpp_lib_dir() -> String {
 }
 
 fn git_version() -> String {
-    use std::process::Command;
-
     let describe_output = Command::new("git")
         .arg("describe")
         .arg("--all")
@@ -36,14 +33,17 @@ fn main() {
     // println!("cargo:rustc-link-lib=static=libmemif");
 
     println!("cargo:rustc-env=GIT_VERSION=version {}", &git_version());
+    println!(
+        "cargo:warning=libmemif directory: {}",
+        &dst.to_str().unwrap()
+    );
 
-    let flags = format!("cargo:rustc-flags=-L{} -lmemif", &dst.to_str().unwrap());
+    let flags = format!("cargo:rustc-flags=-L{}/lib -lmemif", &dst.to_str().unwrap());
 
     // Tell cargo to tell rustc to link the VPP client library
     println!("{}", flags);
 
-                                                                                                                             
-    let bindings = bindgen::Builder::default()                                                                               
+    let bindings = bindgen::Builder::default()
         .header("libmemif/src/libmemif.h")
         .generate()
         .expect("Unable to generate bindings");
@@ -54,6 +54,8 @@ fn main() {
         .write_to_file(out_file_name.clone())
         .expect("Couldn't write bindings!");
 
-    Command::new("rustup").args(&["run", "nightly", "rustfmt", out_file_name.to_str().unwrap()]).status().unwrap();
+    Command::new("rustup")
+        .args(&["run", "nightly", "rustfmt", out_file_name.to_str().unwrap()])
+        .status()
+        .unwrap();
 }
-
